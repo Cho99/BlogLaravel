@@ -77,7 +77,7 @@ class MyTagController extends Controller
     {
         //
         $tag = Tag::find($id);
-        $tags = Tag::all();
+        $tags = Tag::Where('parent_id', 0)->get();
         return view('tags.edit', ['tag' => $tag, 'tags' => $tags]);
     }
 
@@ -94,21 +94,24 @@ class MyTagController extends Controller
         $name = $request->name;
         $parent_id = $request->tag_id;
         $status = $request->status;
-
-        $tag = Tag::find($id);
-        if ($tag->parent_id == $parent_id AND $parent_id != 0) {
-            $tag_a = Tag::find($parent_id);
-            $parent_id_a = $tag_a->parent_id;
-            $result = Tag::where('id', $id)->update(['name' => $name, 'parent_id' => $parent_id_a, 'status' => $status]);
-            if ($result) {
-                $result = Tag::where('id', $parent_id)->update([
-                    'parent_id' => $id]);
-                if ($result) {
-                    return redirect()->route('tags.index')->with('mess', 'Sửa thành công');
-                } else {
-                    return redirect()->route('tags.index')->with('mess', 'Sửa thất bại');
-                }
-            }
+        
+        // $tag = Tag::find($id);
+        // if ($tag->parent_id == $parent_id AND $parent_id != 0) {
+        //     $tag_a = Tag::find($parent_id);
+        //     $parent_id_a = $tag_a->parent_id;
+        //     $result = Tag::where('id', $id)->update(['name' => $name, 'parent_id' => $parent_id_a, 'status' => $status]);
+        //     if ($result) {
+        //         $result = Tag::where('id', $parent_id)->update([
+        //             'parent_id' => $id]);
+        //         if ($result) {
+        //             return redirect()->route('tags.index')->with('mess', 'Sửa thành công');
+        //         } else {
+        //             return redirect()->route('tags.index')->with('mess', 'Sửa thất bại');
+        //         }
+        //     }
+        // }
+        if($parent_id == $id) {
+            return redirect()->route('tags.edit', $id)->with('mess', 'Sửa thất bại');
         }
 
         $result = Tag::where('id', $id)->update([
@@ -116,7 +119,7 @@ class MyTagController extends Controller
         if ($result) {
             return redirect()->route('tags.index')->with('mess', 'Sửa thành công');
         } else {
-            return redirect()->route('tags.index')->with('mess', 'Sửa thất bại');
+            return redirect()->route('tags.edit', ['id' => $id])->with('mess', 'Sửa thất bại');
         }
     }
 
@@ -129,5 +132,17 @@ class MyTagController extends Controller
     public function destroy($id)
     {
         //
+        $tags = Tag::all();
+        foreach($tags as $item) {
+            if($id == $item->parent_id) {
+                return redirect()->route("tags.index")->with("mess", "Tag hiện tại vẫn có các tags con nếu muốn xóa phải không có Tag con nào");
+            }
+        }
+        $tag = Tag::where('id', $id)->delete();
+        if($tag) {
+            return redirect()->route("tags.index")->with("mess", "Xóa Tag thành công");
+        } else {
+            return redirect()->route("tags.index")->with("mess", "Xóa thất bại");
+        }
     }
 }
