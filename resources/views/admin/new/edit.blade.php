@@ -3,7 +3,7 @@
 @section('title', 'Edit New')
 
 @section('content')
-    <form action="{{ route('news.update', [$new->id]) }}" method="POST">
+    <form action="{{ route('my_news.update', [$new->id]) }}" method="POST">
         @csrf
         {{ method_field('PUT') }}
         <div class="form-group">

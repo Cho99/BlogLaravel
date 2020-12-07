@@ -3,7 +3,15 @@
 @section('title', 'My News')
 
 @section('content')
-    <a href="{{ route('news.create') }}" class="btn btn-primary mb-2">
+    @if (Session::has('mess'))
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Thông báo: </strong> {!! Session::get('mess') !!}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    <a href="{{ route('my_news.create') }}" class="btn btn-primary mb-2">
         Add New
         <i class="fas fa-plus"></i>
     </a>
@@ -19,21 +27,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($news as $new)
-                <tr>
-                    <th scope="row">{{ $new->id }}</th>
+            @foreach ($data  as $new)
+                <tr>    
+                    <th scope="row">{{ $new['id'] }}</th>
                     <td>
                         <div class="d-flex">
-                            <img style="height: 75px; width:120px" src="{{ url('upload/', $new->picture) }}"
-                                title="{{ $new->title }}">
+                            <img style="height: 75px; width:120px" src="{{ url('upload/', $new['picture']) }}"
+                                title="{{ $new['id'] }}">
                             <div class="info ml-3 d-flex flex-column">
                                 <div>
                                     <h6 class=""> Title: </h6>
                                     <span class="text-break text-truncate"
-                                        style="max-width: 170px;">{{ $new->title }}</span>
+                                        style="max-width: 170px;">{{ $new['title'] }}</span>
                                 </div>
-                                <span class="text-danger"><i class="far fa-clock" title="{{ $new->updated_at }}"></i>
-                                    {{ date('d-m-Y', strtotime($new->updated_at)) }}</span>
+                                <span class="text-danger"><i class="far fa-clock" title="{{ $new['updated_at'] }}"></i>
+                                    {{ date('d-m-Y', strtotime($new['updated_at'])) }}</span>
                             </div>
                         </div>
                     </td>
@@ -41,10 +49,10 @@
                         <span>{{ Auth::user()->name }}</span>
                     </td>
                     <td>
-                        <span>{{$new->tag_id}}</span>
+                        <span>{{$new['tag_name']}}</span>
                     </td>
                     <td>
-                        @if ($new->status == 0) {
+                        @if ($new['status'] == 0) {
                             <i class="fas fa-times"></i>
                             }
                         @else
@@ -53,11 +61,11 @@
                     </td>
                     <td style="padding-left:0">
                         <div class="action d-flex justify-content-around">
-                            <a class="text-info" href="{{ route('news.show', [$new->id]) }}" title="Detail"><i
+                            <a class="text-info" href="{{ route('my_news.show', [$new['id']]) }}" title="Detail"><i
                                     class="fas fa-file-alt"></i></a>
-                            <a class="text-info" href="{{ route('news.edit', [$new->id]) }}" title="Edit"><i
+                            <a class="text-info" href="{{ route('my_news.edit', [$new['id']]) }}" title="Edit"><i
                                     class="far fa-edit"></i></a>
-                            <form action="{{ route('news.destroy', [$new->id]) }}" method="POST">
+                            <form action="{{ route('news.destroy', [$new['id']]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="text-info" type="submit" style="background: none; border: none;"

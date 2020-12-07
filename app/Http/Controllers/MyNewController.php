@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Tag;
 use App\User;
 use Auth; 
 class MyNewController extends Controller
@@ -11,6 +12,7 @@ class MyNewController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('Role', ['only' => ['edit','update','destroy']]);
     }
     /**
      * Display a listing of the resource.
@@ -22,7 +24,23 @@ class MyNewController extends Controller
         //
         $id = Auth::id();
         $news = User::find($id)->news;
-        return view('admin.new.my_new',['news' => $news]);
+        $tags = Tag::All();
+
+        $data = [];
+        foreach($news as $new) {
+            foreach($tags as $tag) {
+                if($new->tag_id == $tag->id){
+                    array_push($data,['id' => $new->id ,
+                    'title' => $new->title, 
+                    'picture' => $new->picture,
+                    'user_id' => $new->user_id,
+                    'tag_name' => $tag->name,
+                    'status' => $new->status, 
+                    'updated_at' => $new->updated_at]);
+                }
+            }
+        }
+        return view('admin.new.my_new',['data' => $data]);
     }
 
     /**
@@ -33,6 +51,8 @@ class MyNewController extends Controller
     public function create()
     {
         //
+        $tags = Tag::all();
+        return view('admin.new.create', compact('tags'));
     }
 
     /**
@@ -44,6 +64,29 @@ class MyNewController extends Controller
     public function store(Request $request)
     {
         //
+        $user_id = Auth::id();
+        $new = new News;
+        $new->title = $request->title;
+        $new->content = $request->content;
+        $new->user_id = $user_id;
+        $new->status = 1;  
+        $new->tag_id = $request->tag_id;
+        $validate =  $request->validate( [
+            'title' => 'required',
+            'content' => 'required|min:20'
+        ]);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file;
+            $file->move('upload', $file->getClientOriginalName());
+        }
+        $new->picture = $file->getClientOriginalName();
+       
+        if ($new->save()) {
+            return redirect()->route('my_news.create')->with('mess', 'Đăng bài thành công');
+        } else {
+            return redirect()->route('my_news.create')->with('mess', 'Đăng bài thất bài');
+        }
     }
 
     /**
@@ -55,6 +98,13 @@ class MyNewController extends Controller
     public function show($id)
     {
         //
+        $new = News::find($id);
+        if(!$new) {
+            abort(404);
+        }
+        $user_id = $new->user_id;
+        $author = User::find($user_id);
+        return view('admin.new.show', ['new' => $new, 'author' => $author]);
     }
 
     /**
@@ -66,6 +116,12 @@ class MyNewController extends Controller
     public function edit($id)
     {
         //
+        $new = News::find($id);
+        $tags = Tag::all();
+        if(!$new) {
+            return abort(404);
+        }
+        return view('admin.new.edit', ['new' => $new, 'tags' => $tags]);
     }
 
     /**
@@ -78,6 +134,20 @@ class MyNewController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $validate =  $request->validate( [
+            'title' => 'required|max:50|min:5',
+            'content' => 'required|min:20'
+        ]);
+        $title = $request->title;
+        $content = $request->content;
+        $tag_id = $request->tag_id;
+        $result = News::where('id', $id)
+            ->update(['title' => $title, 'content' => $content, 'tag_id' => $tag_id]);
+        if ($result) {
+            return redirect()->route('my_news.index')->with('mess','Sửa thành công bài đăng');
+        } else {
+            return redirect()->route('my_news.edit', ['id' => $id])->with('mess','Sửa bài đăng thất bài');
+        }
     }
 
     /**

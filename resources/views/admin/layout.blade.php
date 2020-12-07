@@ -60,11 +60,11 @@
                 </li>
 
                 <li>
-                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false"
-                        class="dropdown-toggle"><i class="fas fa-tags"></i>Tags</a>
-                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                    <a href="#pageSubmenuTag" data-toggle="collapse" aria-expanded="false"
+                        class="dropdown-toggle"><i class="fas fa-user-tag"></i> Tags</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenuTag">
                         <li>
-                         <a href="{{ route('tags.index') }}"><i class="fas fa-newspaper"></i> List Tags</a>
+                         <a href="{{ route('tags.index') }}"><i class="fas fa-tags"></i>List Tags</a>
                         </li>
                         
                     </ul>

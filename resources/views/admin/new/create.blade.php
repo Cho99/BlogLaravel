@@ -3,7 +3,15 @@
 @section('title', 'Create New')
 
 @section('content')
-    <form action="{{ route('news.store') }}" method="POST" enctype="multipart/form-data">
+    @if (Session::has('mess'))
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>Thông báo: </strong> {!! Session::get('mess') !!}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    @endif
+    <form action="{{ route('my_news.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <label for="exampleFormControlInput1">Title</label>

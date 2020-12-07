@@ -37,9 +37,6 @@
                                 } else {
                                     echo '<option value="'.$item->id.'">'. $char . $item->name . '</option>';
                                 }
-                                
-                               
-                                
                                 // Xóa chuyên mục đã lặp
                                 unset($tags[$key]);
                                 

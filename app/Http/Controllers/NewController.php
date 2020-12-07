@@ -150,7 +150,7 @@ class NewController extends Controller
     {
         $new = News::Where('id', $id)->delete();
         if ($new) {
-            return redirect()->route('my_news.index');
+            return redirect()->route('my_news.index')->with('mess', 'Xóa thành công bài đăng');
         }
     }
 
