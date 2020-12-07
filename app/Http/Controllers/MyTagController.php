@@ -16,7 +16,7 @@ class MyTagController extends Controller
     {
         //
         $tags = Tag::all();
-        return view('tags.show', compact('tags'));
+        return view('admin.tag.index', compact('tags'));
     }
 
     /**
@@ -27,8 +27,8 @@ class MyTagController extends Controller
     public function create()
     {
         //
-        $tags = Tag::get();
-        return view('tags.create', compact('tags'));
+        $tags = Tag::all();
+        return view('admin.tag.create', compact('tags'));
     }
 
     /**
@@ -45,14 +45,24 @@ class MyTagController extends Controller
         $tag->parent_id = $request->tag_id;
         $tag->status = $request->status;
         $validate = $request->validate([
-            'name' => 'required',
+            'name' => 'required|unique:tags,name|max:30|min:3',
             'tag_id' => 'required',
             'status' => 'required',
+        ],[
+            'name.required' => 'Tên tag không được để trống',
+            'name.unique' => 'Tên tag đã tồn tại trong cơ sở dữ liệu',
+            'tag_id.required' => 'Không được để trống Tag',
+            'status.required' => 'Trạng thái không được để trống'
         ]);
-        if ($tag->save()) {
-            return redirect()->action('MyTagController@create')->with('mess', 'Thêm thành công');
+        // if ($tag->save()) {
+        //     return redirect()->action('MyTagController@create')->with('mess', 'Thêm thành công');
+        // } else {
+        //     echo redirect()->action('MyTagController@create')->with('mess', 'Lỗi hệ thống');
+        // }
+        if($tag->save()) {
+            return redirect()->route('tags.create')->with('mess', 'Thêm thành công Tag');
         } else {
-            echo redirect()->action('MyTagController@create')->with('mess', 'Lỗi hệ thống');
+            return redirect()->route('tags.create')->with('mess', 'Thêm tag thất bại');
         }
     }
 
@@ -78,7 +88,7 @@ class MyTagController extends Controller
         //
         $tag = Tag::find($id);
         $tags = Tag::Where('parent_id', 0)->get();
-        return view('tags.edit', ['tag' => $tag, 'tags' => $tags]);
+        return view('admin.tag.edit', ['tag' => $tag, 'tags' => $tags]);
     }
 
     /**

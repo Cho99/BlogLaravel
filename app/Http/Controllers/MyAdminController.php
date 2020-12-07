@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\News;
-use App\User;
-use Auth; 
-class MyNewController extends Controller
+
+class MyAdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -20,9 +15,8 @@ class MyNewController extends Controller
     public function index()
     {
         //
-        $id = Auth::id();
-        $news = User::find($id)->news;
-        return view('admin.new.my_new',['news' => $news]);
+        $news = News::all();
+        return view('admin.index', compact('news'));
     }
 
     /**

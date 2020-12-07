@@ -15,14 +15,20 @@ Route::get('/', function () {
     return redirect()->route('news.index');
 });
 
+
+// Admin Group
+Route::group(['prefix' => 'admin'], function() {
+    Route::resource('/', 'MyAdminController');
+    Route::resource('user','UserController');
+    Route::resource('my_news', 'MyNewController');
+    Route::resource('tags', 'MyTagController');
+});
+
 Route::resource('/news', 'NewController');
 Route::get('/search', 'NewController@search');
 Route::get('/news/delete/{news}', 'NewController@delete');
 
-Route::resource('/my_news', 'MyNewController');
 //Route::get('/news/{news}/edit', 'NewController@edit')->middleware('Role');
-Route::resource('/tags', 'MyTagController');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

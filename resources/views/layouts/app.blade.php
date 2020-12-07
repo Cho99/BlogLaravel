@@ -43,11 +43,11 @@
                         <i class="fas fa-home"></i>
                         Home
                     </a>
-                    <a class="navbar-brand" href="{{ url('/my_news') }}">
+                    <a class="navbar-brand" href="{{ url('/admin/my_news') }}">
                         <i class="far fa-newspaper"></i>
                         MyNews
                     </a>
-                    <a class="navbar-brand" href="{{ url('/tags') }}">
+                    <a class="navbar-brand" href="{{ url('/admin/tags') }}">
                         <i class="fas fa-tags"></i></i>
                         Tags
                     </a>
@@ -100,7 +100,7 @@
                 </div>
             </div>
         </nav>
-
+        
         <main class="py-4">
             <div class="container">
                 @yield('content')
@@ -108,5 +108,5 @@
         </main>
     </div>
 </body>
-
+    
 </html>

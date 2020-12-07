@@ -9,7 +9,7 @@
             <input type="title" name="title" class="form-control" id="exampleFormControlInput1" placeholder="Title ..."
                 value={{ $new->title }}>
             @error('title')
-                <div class="alert alert-danger">{{ $message }}</div>
+                <span class="text-danger font-weight-bold mt-2">{{ $message }}</span>
             @enderror
         </div>
         <div class="form-group">

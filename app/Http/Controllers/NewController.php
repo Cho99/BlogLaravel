@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Tag;
 use App\User;
 use Auth; 
 
@@ -40,7 +41,8 @@ class NewController extends Controller
     public function create()
     {
         //
-        return view('news.create');
+        $tags = Tag::all();
+        return view('admin.new.create', compact('tags'));
     }
 
     /**
@@ -56,7 +58,9 @@ class NewController extends Controller
         $new = new News;
         $new->title = $request->title;
         $new->content = $request->content;
-        $new->user_id = $user_id;     
+        $new->user_id = $user_id;
+        $new->status = 1;  
+        $new->tag_id = $request->tag_id;
         $validate =  $request->validate( [
             'title' => 'required',
             'content' => 'required|min:20'
@@ -90,7 +94,7 @@ class NewController extends Controller
         }
         $user_id = $new->user_id;
         $author = User::find($user_id);
-        return view('news.show', ['new' => $new, 'author' => $author]);
+        return view('admin.new.show', ['new' => $new, 'author' => $author]);
     }
 
     /**
@@ -103,10 +107,11 @@ class NewController extends Controller
     {
         //
         $new = News::find($id);
+        $tags = Tag::all();
         if(!$new) {
             return abort(404);
         }
-        return view('news.edit', ['new' => $new]);
+        return view('admin.new.edit', ['new' => $new, 'tags' => $tags]);
     }
 
     /**
@@ -120,13 +125,14 @@ class NewController extends Controller
     {
         //
         $validate =  $request->validate( [
-            'title' => 'required',
+            'title' => 'required|max:50|min:5',
             'content' => 'required|min:20'
         ]);
         $title = $request->title;
         $content = $request->content;
+        $tag_id = $request->tag_id;
         $result = News::where('id', $id)
-            ->update(['title' => $title, 'content' => $content]);
+            ->update(['title' => $title, 'content' => $content, 'tag_id' => $tag_id]);
         if ($result) {
             return redirect()->route('news.index');
         } else {

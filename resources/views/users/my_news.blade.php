@@ -17,11 +17,15 @@
                     <th class="w-10" style="width: 200px">{{ $new->id }}</th>
                     <td>
                         <div class="d-flex">
-                            <img style="height: 128px; width:200px" src="upload/{{ $new->picture }}"
+                            <img style="height: 128px; width:200px" src="{{ url('upload/',$new->picture) }}"
                                 title="{{ $new->title }}">
-                            <div class="info ml-3">
+                            <div class="info ml-3 d-flex flex-column">
+                               <div>
                                 <h5 class=""> Title: </h5>
-                                <span class="text-break text-truncate" style="max-width: 50px; width: 50px;">{{ $new->title }}</span> 
+                                    <span class="text-break text-truncate" style="max-width: 50px; width: 50px;">{{ $new->title }}</span> 
+                               </div>
+                                <span class="text-danger"><i class="far fa-clock" title="{{ $new->updated_at }}"></i>
+                                    {{ date('d-m-Y', strtotime($new->updated_at)) }}</span>
                             </div>
                         </div>
                     </td>

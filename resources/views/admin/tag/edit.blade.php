@@ -1,7 +1,8 @@
-@extends('layouts.app')
+@extends('admin/layout')
+
+@section('title', 'Edit Tag')
 
 @section('content')
-    <h1 class="text-center"> Edit Tag </h1>
     @if (Session::has('mess'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>Thông báo: </strong> {!! Session::get('mess') !!}
