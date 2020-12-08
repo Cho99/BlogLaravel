@@ -25,34 +25,9 @@
             <label for="exampleFormControlSelect1">Tags</label>
             <select name="tag_id" class="form-control">
                 <option value="0">--- Tags ---</option>
-                @php
-                function showTag($tags, $parent_id = 0, $char = '')
-                {
-                    foreach ($tags as $key => $item)
-                    {
-                    // Nếu là chuyên mục con thì hiển thị
-                        if ($item['parent_id'] == $parent_id)
-                        {
-
-                        if($item->parent_id == 0) {
-                        echo '<option value="'.$item->id.'">'. $char . $item->name . '</option>';
-                        } else {
-                        echo '<option value="'.$item->id.'">'. $char . $item->name . '</option>';
-                        }
-
-                        // Xóa chuyên mục đã lặp
-                        unset($tags[$key]);
-
-                        // Tiếp tục đệ quy để tìm chuyên mục con của chuyên mục đang lặp
-                        showTag($tags, $item->id, $char.'--');
-                        }
-                    }
-                }
-                @endphp
-
-                @php
-                showTag($tags)
-                @endphp
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @endforeach
             </select>
         </div>
         @error('parent_id')

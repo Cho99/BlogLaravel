@@ -15,7 +15,7 @@
     Add Tags 
     <i class="fas fa-plus"></i>
 </a>
-<table class="table table-sm">
+<table class="table table-fixed">
     <thead>
         <tr>
             <th scope="col">#</th>

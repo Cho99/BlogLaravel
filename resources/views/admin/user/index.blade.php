@@ -3,7 +3,7 @@
 @section('title', 'List User')
 
 @section('content')
-    <table class="table">
+    <table class="table  table-fixed">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -16,11 +16,11 @@
         <tbody>
             @foreach ($users as $user)
             <tr>
-                <th scope="row">{{ $user->id }}</th>
-                <td>{{ $user->name }}</td>
-                <td>{{ $user->email }}</td>
+                <th scope="row">{{ $user['id'] }}</th>
+                <td>{{ $user['name'] }}</td>
+                <td>{{ $user['email'] }}</td>
                 <td>1</td>
-                <td>10 Bài</td>
+                <td>{{ $user['total'] }} Bài viết</td>
             </tr>
             @endforeach
         </tbody>

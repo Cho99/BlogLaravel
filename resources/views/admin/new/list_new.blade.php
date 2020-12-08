@@ -1,6 +1,6 @@
 @extends('admin/layout')
 
-@section('title', 'My News')
+@section('title', 'List News')
 
 @section('content')
     @if (Session::has('mess'))
@@ -28,7 +28,7 @@
         </thead>
         <div>
              <tbody>
-            @foreach ($data as $new)
+            @foreach ($news as $new)
                 <tr>
                     <th scope="row">{{ $new['id'] }}</th>
                     <td>

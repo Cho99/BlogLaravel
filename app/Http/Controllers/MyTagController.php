@@ -27,7 +27,7 @@ class MyTagController extends Controller
     public function create()
     {
         //
-        $tags = Tag::all();
+        $tags = Tag::where('parent_id',0)->get();
         return view('admin.tag.create', compact('tags'));
     }
 
@@ -120,6 +120,7 @@ class MyTagController extends Controller
         //         }
         //     }
         // }
+
         if($parent_id == $id) {
             return redirect()->route('tags.edit', $id)->with('mess', 'Sửa thất bại');
         }
@@ -148,11 +149,16 @@ class MyTagController extends Controller
                 return redirect()->route("tags.index")->with("mess", "Tag hiện tại vẫn có các tags con nếu muốn xóa phải không có Tag con nào");
             }
         }
+        $result = Tag::find($id)->news;
+        if(count($result)) {
+            return redirect()->route("tags.index")->with("mess", "Hiện tại Tag này đang có bài đăng"); 
+        }
         $tag = Tag::where('id', $id)->delete();
         if($tag) {
             return redirect()->route("tags.index")->with("mess", "Xóa Tag thành công");
         } else {
             return redirect()->route("tags.index")->with("mess", "Xóa thất bại");
         }
+        
     }
 }

@@ -42,10 +42,10 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-home"></i> Home</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
-                        <a href="{{ route('user.index') }}"><i class="fas fa-users"></i> List User</a>
+                            <a href="{{ route('user.index') }}"><i class="fas fa-users"></i> List User</a>
                         </li>
                         <li>
-                         <a href="{{ route('my_news.index') }}"><i class="fas fa-newspaper"></i> My News</a>
+                            <a href="{{ route('my_news.index') }}"><i class="fas fa-newspaper"></i> My News</a>
                         </li>
                     </ul>
                 </li>
@@ -54,7 +54,7 @@
                         class="dropdown-toggle"><i class="far fa-newspaper"></i> News</a>
                     <ul class="collapse list-unstyled" id="pageSubmenu">
                         <li>
-                            <a href="#"><i class="fas fa-newspaper"></i> List News</a>
+                            <a href="{{ route('news.index')}}"><i class="fas fa-newspaper"></i> List News</a>
                         </li>
                       
                     </ul>

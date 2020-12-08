@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\News;
 use App\User;
 
 class UserController extends Controller
@@ -16,7 +17,25 @@ class UserController extends Controller
     {
         //
         $users = User::all();
-        return view('admin.user.index', compact('users'));
+        $news = News::all();
+        $extractData = [];
+        foreach($users as $valUser){
+            $total = 0;
+            foreach($news as $valNew){
+                if($valNew->user_id == $valUser->id){
+                    $total++;
+                }
+            }
+            $data = [
+                'id' => $valUser->id,
+                'name'  =>  $valUser->name,
+                'email' => $valUser->email,
+                'total' =>  $total,
+            ];
+            array_push($extractData, $data);
+        }
+
+        return view('admin.user.index', ['users' => $extractData]);
     }
 
     /**

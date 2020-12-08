@@ -27,10 +27,18 @@ class NewController extends Controller
         //$page = 3;
         //$news = News::paginate($page);
         $news = News::orderBy('id','DESC')->get();
+        $user = User::all();
+        foreach($news as $new) {
+            foreach($users as $user) {
+                
+            }
+        }
+
         // $news = News::cursor()->filter(function ($news){
         //     return $news->id > 4;
         // });
-        return view('news.news', ['news' => $news]);
+
+        return view('admin.new.list_new', ['news' => $news]);
     }
 
     /**

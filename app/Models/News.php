@@ -11,4 +11,8 @@ class News extends Model
         'content',
         'picture',
     ];
+    
+    public function tags(){
+        return $this->belongsTo('App\Models\Tag');
+    }
 }
