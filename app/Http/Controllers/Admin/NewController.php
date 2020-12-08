@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Models\News;
@@ -27,18 +28,32 @@ class NewController extends Controller
         //$page = 3;
         //$news = News::paginate($page);
         $news = News::orderBy('id','DESC')->get();
-        $user = User::all();
+        $users = User::all();
+        $tags = Tag::all();
+
+        $data = [];
         foreach($news as $new) {
             foreach($users as $user) {
-                
+                foreach($tags as $tag) {
+                    if($new->user_id == $user->id) {
+                        if($new->tag_id == $tag->id) {
+                            array_push($data,['id' => $new->id ,
+                            'title' => $new->title, 
+                            'picture' => $new->picture,
+                            'user_id' => $new->user_id,
+                            'author' => $user->name,
+                            'tag_name' => $tag->name,
+                            'status' => $new->status, 
+                            'updated_at' => $new->updated_at]);
+                        }
+                    }
+                }
             }
         }
-
         // $news = News::cursor()->filter(function ($news){
         //     return $news->id > 4;
         // });
-
-        return view('admin.new.list_new', ['news' => $news]);
+        return view('admin.new.list_new', ['news' => $data]);
     }
 
     /**
@@ -81,9 +96,9 @@ class NewController extends Controller
         $new->picture = $file->getClientOriginalName();
        
         if ($new->save()) {
-            return redirect()->route('news.index');
+            return redirect()->route('admin.new.index')->with('mess', 'Tạo bài viết thành công');
         } else {
-            return redirect()->route('news.create');
+            return redirect()->route('admin.new.create')->with('mess', 'Thêm bài viết thất bại');
         }
     }
 
@@ -142,9 +157,9 @@ class NewController extends Controller
         $result = News::where('id', $id)
             ->update(['title' => $title, 'content' => $content, 'tag_id' => $tag_id]);
         if ($result) {
-            return redirect()->route('news.index');
+            return redirect()->route('news.index')->with('mess', 'Cập nhật bài đăng thành công');
         } else {
-            return redirect()->route('news.edit', ['id' => $id]);
+            return redirect()->route('news.edit', ['id' => $id])->with('mess', 'Cập nhật bài đăng thất bại');
         }
     }
 
@@ -158,14 +173,16 @@ class NewController extends Controller
     {
         $new = News::Where('id', $id)->delete();
         if ($new) {
-            return redirect()->route('my_news.index')->with('mess', 'Xóa thành công bài đăng');
+            return redirect()->route('news.index')->with('mess', 'Xóa thành công bài đăng');
         }
     }
 
     public function delete(Request $request, $id) {
-       $new = News::Where('id', $id)->delete();
-       if ($new) {
-        return redirect()->route('news.index');
+       $result = News::Where('id', $id)->delete();
+       if ($result) {
+           return redirect()->route('news.index')->with('mess', 'Xóa bài đăng thành công');
+       } else {
+           return redirect()->route('news.index')->with('mess', 'Xóa bài đăng thất bại');
        }
     }
 

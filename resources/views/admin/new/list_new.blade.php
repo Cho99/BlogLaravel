@@ -47,7 +47,7 @@
                         </div>
                     </td>
                     <td>
-                        <span>{{ Auth::user()->name }}</span>
+                        <span>{{ $new['author'] }}</span>
                     </td>
                     <td>
                         <span>{{ $new['tag_name'] }}</span>
@@ -62,11 +62,11 @@
                     </td>
                     <td style="padding-left:0">
                         <div class="action d-flex justify-content-around">
-                            <a class="text-info" href="{{ route('my_news.show', [$new['id']]) }}" title="Detail"><i
+                            <a class="text-info" href="{{ route('news.show', [$new['id']]) }}" title="Detail"><i
                                     class="fas fa-file-alt"></i></a>
-                            <a class="text-info" href="{{ route('my_news.edit', [$new['id']]) }}" title="Edit"><i
+                            <a class="text-info" href="{{ route('news.edit', [$new['id']]) }}" title="Edit"><i
                                     class="far fa-edit"></i></a>
-                            <form action="{{ route('my_news.destroy', [$new['id']]) }}" method="POST">
+                            <form action="{{ route('news.destroy', [$new['id']]) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button class="text-info" type="submit" style="background: none; border: none;"

@@ -1,6 +1,6 @@
 @extends('admin/layout')
 
-@section('title', 'Edit New')
+@section('title', 'Edit New: '. $new->title)
 
 @section('content')
     <form action="{{ route('my_news.update', [$new->id]) }}" method="POST">

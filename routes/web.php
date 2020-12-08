@@ -18,13 +18,14 @@ Route::get('/', function () {
 
 // Admin Group
 Route::group(['prefix' => 'admin'], function() {
-    Route::resource('/', 'MyAdminController');
-    Route::resource('user','UserController');
-    Route::resource('my_news', 'MyNewController');
-    Route::resource('tags', 'MyTagController');
+    Route::resource('/', 'Admin\MyAdminController');
+    Route::resource('user','Admin\UserController');
+    Route::resource('my_news', 'Admin\MyNewController');
+    Route::resource('tags', 'Admin\MyTagController');
+    Route::resource('news', 'Admin\NewController');
 });
 
-Route::resource('/news', 'NewController');
+
 Route::get('/search', 'NewController@search');
 Route::get('/news/delete/{news}', 'NewController@delete');
 

@@ -1,6 +1,6 @@
 @extends('admin/layout')
 
-@section('title', 'Edit Tag')
+@section('title', 'Edit Tag: '.$tag->name)
 
 @section('content')
     @if (Session::has('mess'))

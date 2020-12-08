@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
@@ -27,7 +28,7 @@ class MyTagController extends Controller
     public function create()
     {
         //
-        $tags = Tag::where('parent_id',0)->get();
+        $tags = Tag::Where('parent_id', 0)->where('status', 1)->get();
         return view('admin.tag.create', compact('tags'));
     }
 
@@ -87,7 +88,7 @@ class MyTagController extends Controller
     {
         //
         $tag = Tag::find($id);
-        $tags = Tag::Where('parent_id', 0)->get();
+        $tags = Tag::Where('parent_id', 0)->where('status', 1)->get();
         return view('admin.tag.edit', ['tag' => $tag, 'tags' => $tags]);
     }
 
