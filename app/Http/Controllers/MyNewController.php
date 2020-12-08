@@ -159,5 +159,11 @@ class MyNewController extends Controller
     public function destroy($id)
     {
         //
+        $result = News::find($id)->delete();
+        if($result) {
+            return redirect()->route('my_news.index')->with('mess','Xóa thành công bài đăng');
+        }else {
+            return redirect()->route('my_news.index')->with('mess','Xóa bài đăng thất bại');
+        }
     }
 }

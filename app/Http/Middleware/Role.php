@@ -17,7 +17,7 @@ class Role
      */
     public function handle($request, Closure $next)
     {
-        $id_news = $request->news;
+        $id_news = $request->my_news;
         $new = News::find($id_news);
         if(!$new) {
             abort(404);

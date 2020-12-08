@@ -26,6 +26,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/admins/css/sidebar.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/table.css') }}">
 </head>
 
 <body>
@@ -131,3 +132,4 @@
     </div>
 </body>
 </html>
+

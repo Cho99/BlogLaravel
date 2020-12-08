@@ -1,0 +1,17 @@
+tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+thead,
+tbody tr {
+    width: var(--table-width);
+    display: table;
+    table-layout: fixed;
+}
+
+body {
+    --table-width: 100%;
+    /* Or any value, this will change dinamically */
+}
