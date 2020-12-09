@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\News;
+use App\Models\Admin;
+use Auth;
 
 class MyAdminController extends Controller
 {
@@ -85,4 +87,38 @@ class MyAdminController extends Controller
     {
         //
     }
+
+    public function postLogin(Request $request) {
+        $this->validate($request, [
+            'email' => 'required',
+            'password' => 'required'
+        ],
+        [
+            'email.required' => 'Email không được để trống',
+            'password.required' => 'Password không được để trống'
+        ]);
+        $user = [
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+        // if ($request->remember == trans('remember.Remember Me')) {
+        //     $remember = true;
+        // } else {
+        //     $remember = false;
+        // }
+        $admin = Admin::all();
+
+        if(Auth::guard('admin')->attempt($user)) {
+            echo "Dang Nhap Thanh Cong";
+        } else {
+            echo "Dang Nhap That Bai";
+        }
+    }
+
+
+    public function login() {
+        return view('admin/login');
+    }
 }
+
+   

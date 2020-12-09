@@ -17,17 +17,20 @@ Route::get('/', function () {
 
 
 // Admin Group
-Route::group(['prefix' => 'admin'], function() {
-    Route::resource('/', 'Admin\MyAdminController');
-    Route::resource('user','Admin\UserController');
-    Route::resource('my_news', 'Admin\MyNewController');
-    Route::resource('tags', 'Admin\MyTagController');
-    Route::resource('news', 'Admin\NewController');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
+    Route::resource('/', 'MyAdminController');
+    Route::get('login', 'MyAdminController@login');
+    Route::post('login', 'MyAdminController@postLogin')->name('admin.login');
+    Route::resource('user','UserController');
+    Route::resource('my_news', 'MyNewController');
+    Route::resource('tags', 'MyTagController');
+    Route::resource('news', 'NewController');
+    Route::get('/search', 'NewController@search');
 });
 
 
-Route::get('/search', 'NewController@search');
-Route::get('/news/delete/{news}', 'NewController@delete');
+
+// Route::get('/news/delete/{news}', 'NewController@delete');
 
 //Route::get('/news/{news}/edit', 'NewController@edit')->middleware('Role');
 Auth::routes();
