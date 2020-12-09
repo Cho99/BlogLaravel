@@ -42,6 +42,9 @@
                     <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-home"></i> Home</a>
                     <ul class="collapse list-unstyled" id="homeSubmenu">
                         <li>
+                            <a href="{{ route('index') }}"><i class="fas fa-house-user"></i> Home</a>
+                        </li>
+                        <li>
                             <a href="{{ route('user.index') }}"><i class="fas fa-users"></i> List User</a>
                         </li>
                         <li>

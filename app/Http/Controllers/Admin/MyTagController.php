@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 
 class MyTagController extends Controller
 {
+    public function __construct() {
+        $this->middleware('admin', ['except' => 'login']);
+    }
     /**
      * Display a listing of the resource.
      *

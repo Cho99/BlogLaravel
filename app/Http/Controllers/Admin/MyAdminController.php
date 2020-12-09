@@ -10,7 +10,11 @@ use Auth;
 
 class MyAdminController extends Controller
 {
-    /**
+    public function __construct()
+    {
+       $this->middleware('admin', ['except' => 'login']);
+    }
+    /** 
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -109,9 +113,9 @@ class MyAdminController extends Controller
         $admin = Admin::all();
 
         if(Auth::guard('admin')->attempt($user)) {
-            echo "Dang Nhap Thanh Cong";
+            return redirect()->route('index');
         } else {
-            echo "Dang Nhap That Bai";
+            return redirect()->back()->with('mess', 'Email với tài khoản không đúng');
         }
     }
 

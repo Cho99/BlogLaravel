@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Admin @yield('title')</title>
+    <title>Admin | Login</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -31,9 +31,18 @@
 
 <body>
     <div class="d-flex justify-content-center align-content-center" style="height: 100vh; align-items: center;">
-        <div class="card" style="width: 350px; height: 300px;">
+        <div class="card" style="width: 350px;">
             <article class="card-body">
                 <h4 class="card-title text-center mb-4 mt-1">Admin</h4>
+                <hr>
+                @if (Session::has('mess'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Thông báo: </strong> {!! Session::get('mess') !!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <form action="{{ route('admin.login') }}" method="POST">
                     @csrf
                     <div class="form-group">
@@ -61,6 +70,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Login </button>
                     </div>
+                    <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
                 </form>
             </article>
         </div> <!-- card.// -->

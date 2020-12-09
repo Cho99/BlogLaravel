@@ -14,7 +14,7 @@ class NewController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('guest', ['only' => ['index , show']]);
+        $this->middleware('admin');
         $this->middleware('Role', ['only' => ['edit','update','destroy']]);
     }
 

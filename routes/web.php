@@ -19,7 +19,7 @@ Route::get('/', function () {
 // Admin Group
 Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
     Route::resource('/', 'MyAdminController');
-    Route::get('login', 'MyAdminController@login');
+    Route::get('login', 'MyAdminController@login')->name('admin.index');
     Route::post('login', 'MyAdminController@postLogin')->name('admin.login');
     Route::resource('user','UserController');
     Route::resource('my_news', 'MyNewController');
