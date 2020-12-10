@@ -12,7 +12,7 @@ class MyAdminController extends Controller
 {
     public function __construct()
     {
-       $this->middleware('admin', ['except' => 'login']);
+       //$this->middleware('admin', ['except' => 'login', 'postLogin']);
     }
     /** 
      * Display a listing of the resource.
@@ -22,7 +22,7 @@ class MyAdminController extends Controller
     public function index()
     {
         //
-        $news = News::all();
+        $news = News::all();    
         return view('admin.index', compact('news'));
     }
 
@@ -110,7 +110,7 @@ class MyAdminController extends Controller
         // } else {
         //     $remember = false;
         // }
-        $admin = Admin::all();
+      
 
         if(Auth::guard('admin')->attempt($user)) {
             return redirect()->route('index');

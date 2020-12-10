@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\News;
+use App\Models\Admin;
 use App\Models\Tag;
 use App\User;
 use Auth; 
@@ -23,21 +24,27 @@ class MyNewController extends Controller
     public function index()
     {
         //
-        $id = Auth::id();
-        $news = User::find($id)->news;
+        $id = auth()->guard('admin')->user()->id;
+        //$news = Admin::find($id)->news;
+        $news = false;
+        // dd($news);
+        // die;
+
         $tags = Tag::All();
 
         $data = [];
-        foreach($news as $new) {
-            foreach($tags as $tag) {
-                if($new->tag_id == $tag->id){
-                    array_push($data,['id' => $new->id ,
-                    'title' => $new->title, 
-                    'picture' => $new->picture,
-                    'user_id' => $new->user_id,
-                    'tag_name' => $tag->name,
-                    'status' => $new->status, 
-                    'updated_at' => $new->updated_at]);
+        if($news) {
+            foreach($news as $new) {
+                foreach($tags as $tag) {
+                    if($new->tag_id == $tag->id){
+                        array_push($data,['id' => $new->id ,
+                        'title' => $new->title, 
+                        'picture' => $new->picture,
+                        'user_id' => $new->user_id,
+                        'tag_name' => $tag->name,
+                        'status' => $new->status, 
+                        'updated_at' => $new->updated_at]);
+                    }
                 }
             }
         }
