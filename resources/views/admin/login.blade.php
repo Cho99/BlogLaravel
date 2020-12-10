@@ -43,6 +43,14 @@
                         </button>
                     </div>
                 @endif
+                @if (Session::has('mess_success'))
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Thông báo: </strong> {!! Session::get('mess_success') !!}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            @endif
                 <form action="{{ route('admin.login') }}" method="POST">
                     @csrf
                     <div class="form-group">
@@ -70,7 +78,7 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Login </button>
                     </div>
-                    <p class="text-center"><a href="#" class="btn">Forgot password?</a></p>
+                    <p class="text-center"><a href="#" class="btn">Forgot password?</a> OR <a href="{{ route('create') }}" class="btn">Sign up</a> </p>
                 </form>
             </article>
         </div> <!-- card.// -->

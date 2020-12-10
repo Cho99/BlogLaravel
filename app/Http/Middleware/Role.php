@@ -29,7 +29,7 @@ class Role
             abort(404);
         }
         $user_id = $new->user_id;
-        if($user_id == Auth::id()) {
+        if($user_id == auth()->guard('admin')->user()->id) {
             return $next($request);
         } else {
             return abort(404);

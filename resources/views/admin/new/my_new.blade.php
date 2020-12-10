@@ -47,7 +47,7 @@
                         </div>
                     </td>
                     <td>
-                        <span>{{ Auth::user()->name }}</span>
+                        <span>{{ $new['author'] }}</span>
                     </td>
                     <td>
                         <span>{{ $new['tag_name'] }}</span>

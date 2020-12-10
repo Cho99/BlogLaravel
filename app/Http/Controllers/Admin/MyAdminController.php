@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAdminRequest;
 use App\Models\News;
 use App\Models\Admin;
 use Auth;
@@ -34,6 +35,7 @@ class MyAdminController extends Controller
     public function create()
     {
         //
+        return view('admin.register');
     }
 
     /**
@@ -42,9 +44,21 @@ class MyAdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreAdminRequest $request)
     {
         //
+        //dd($request->all());
+        $level = 0;
+        $admin = new Admin;
+        $admin->author_name = $request->author;
+        $admin->email = $request->email;
+        $admin->password = bcrypt($request->password);
+        $admin->level = $level;
+        if($admin->save()) {
+            return redirect()->route('admin.index')->with('mess_success', 'Đăng ký tài khoản thành công');
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

@@ -25,13 +25,11 @@ class MyNewController extends Controller
     {
         //
         $id = auth()->guard('admin')->user()->id;
-        //$news = Admin::find($id)->news;
-        $news = false;
-        // dd($news);
+        $author = auth()->guard('admin')->user()->author_name;
+        $news = Admin::find($id)->news;
+        // print_r($news);
         // die;
-
         $tags = Tag::All();
-
         $data = [];
         if($news) {
             foreach($news as $new) {
@@ -41,6 +39,7 @@ class MyNewController extends Controller
                         'title' => $new->title, 
                         'picture' => $new->picture,
                         'user_id' => $new->user_id,
+                        'author' => $author, 
                         'tag_name' => $tag->name,
                         'status' => $new->status, 
                         'updated_at' => $new->updated_at]);
@@ -72,7 +71,7 @@ class MyNewController extends Controller
     public function store(Request $request)
     {
         //
-        $user_id = Auth::id();
+        $user_id = auth()->guard('admin')->user()->id;
         $new = new News;
         $new->title = $request->title;
         $new->content = $request->content;
