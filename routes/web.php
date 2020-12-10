@@ -21,6 +21,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
     Route::resource('/', 'MyAdminController');
     Route::get('login', 'MyAdminController@login')->name('admin.index');
     Route::post('login', 'MyAdminController@postLogin')->name('admin.login');
+    Route::post('logout', 'MyAdminController@logout')->name('admin.logout');
     Route::resource('user','UserController');
     Route::resource('my_news', 'MyNewController');
     Route::resource('tags', 'MyTagController');

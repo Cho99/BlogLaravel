@@ -123,6 +123,11 @@ class MyAdminController extends Controller
     public function login() {
         return view('admin/login');
     }
+
+    public function logout() {
+        Auth::guard('admin')->logout();
+        return redirect()->route('admin.index');
+    }
 }
 
    
