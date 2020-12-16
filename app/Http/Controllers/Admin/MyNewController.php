@@ -110,7 +110,7 @@ class MyNewController extends Controller
             abort(404);
         }
         $user_id = $new->user_id;
-        $author = User::find($user_id);
+        $author = Admin::find($user_id);
         return view('admin.new.show', ['new' => $new, 'author' => $author]);
     }
 

@@ -33,8 +33,8 @@
                     <th scope="row">{{ $new['id'] }}</th>
                     <td>
                         <div>
-                            <img style="height: 75px; width:120px" src="{{ url('upload/', $new['picture']) }}"
-                                title="{{ $new['id'] }}">
+                            <a href="{{ route('admin.download', [$new['picture']]) }}" target="_blank" rel="noopener noreferrer"> <img style="height: 75px; width:120px" src="{{ url('upload/', $new['picture']) }}"
+                                title="{{ $new['id'] }}"> </a>
                             {{-- <div class="info ml-3 d-flex flex-column">
                                 <div>
                                     <h6 class=""> Title: </h6>

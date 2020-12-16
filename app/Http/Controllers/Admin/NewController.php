@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use App\Models\News;
 use App\Models\Tag;
+use App\Models\Admin;
 use App\User;
 use Auth; 
 
@@ -28,20 +30,19 @@ class NewController extends Controller
         //$page = 3;
         //$news = News::paginate($page);
         $news = News::orderBy('id','DESC')->get();
-        $users = User::all();
+        $authors = Admin::all();
         $tags = Tag::all();
-
         $data = [];
         foreach($news as $new) {
-            foreach($users as $user) {
+            foreach($authors as $author) {
                 foreach($tags as $tag) {
-                    if($new->user_id == $user->id) {
+                    if($new->user_id == $author->id) {
                         if($new->tag_id == $tag->id) {
                             array_push($data,['id' => $new->id ,
                             'title' => $new->title, 
                             'picture' => $new->picture,
                             'user_id' => $new->user_id,
-                            'author' => $user->name,
+                            'author' => $author->author_name,
                             'tag_name' => $tag->name,
                             'status' => $new->status, 
                             'updated_at' => $new->updated_at]);
@@ -53,6 +54,7 @@ class NewController extends Controller
         // $news = News::cursor()->filter(function ($news){
         //     return $news->id > 4;
         // });
+        //dd($data);
         return view('admin.new.list_new', ['news' => $data]);
     }
 
@@ -110,13 +112,12 @@ class NewController extends Controller
      */
     public function show($id)
     {
-        //
         $new = News::find($id);
         if(!$new) {
             abort(404);
         }
         $user_id = $new->user_id;
-        $author = User::find($user_id);
+        $author = Admin::find($user_id);
         return view('admin.new.show', ['new' => $new, 'author' => $author]);
     }
 

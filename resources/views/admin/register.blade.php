@@ -32,7 +32,7 @@
 <body>
     <div class="card bg-light">
         <article class="card-body mx-auto" style="max-width: 400px;">
-            <h4 class="card-title mt-3 text-center">Create Account</h4>
+            <h4 class="card-title mt-3 text-center">{{ trans('labels.create_account') }}</h4>
             <p>
                 <a href="" class="btn btn-block btn-facebook"> <i class="fab fa-facebook-f"></i>   Login via
                     facebook</a>
@@ -46,7 +46,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                     </div>
-                    <input name="author" class="form-control" placeholder="Full name" type="text">
+                    <input name="author" class="form-control" placeholder="{{ trans('labels.full_name') }}" type="text" value={{ old('author') }}>
 
                 </div> <!-- form-group// -->
                 @error('author')
@@ -56,7 +56,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                     </div>
-                    <input name="email" class="form-control" placeholder="Email address" type="email">
+                    <input name="email" class="form-control" placeholder="{{ trans('labels.email_address') }}" type="email" value={{ old('email')}}>
 
                 </div>
                 @error('email')
@@ -74,7 +74,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                     </div>
-                    <input class="form-control" name="password" placeholder="Create password" type="password">
+                    <input class="form-control" name="password" placeholder="{{ trans('labels.create_password') }}" type="password">
 
                 </div> <!-- form-group// -->
                 @error('password')
@@ -87,9 +87,9 @@
                     <input class="form-control" name="re_password" placeholder="Repeat password" type="password">
                 </div> <!-- form-group// --> --}}
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Create Account </button>
+                    <button type="submit" class="btn btn-primary btn-block"> {{ trans('labels.create_account') }} </button>
                 </div> <!-- form-group// -->
-                <p class="text-center">Have an account? <a href="{{ route('admin.login') }}">Log In</a> </p>
+                <p class="text-center">{{ Lang::get('labels.have_account') }} <a href="{{ route('admin.login') }}">{{ trans('labels.login') }}</a> </p>
             </form>
         </article>
     </div> <!-- card.// -->

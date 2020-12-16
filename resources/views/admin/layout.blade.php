@@ -27,6 +27,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/admins/css/sidebar.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/table.css') }}">
+    @yield('css')
 </head>
 
 <body>
@@ -44,12 +45,17 @@
                         <li>
                             <a href="{{ route('index') }}"><i class="fas fa-house-user"></i> Home</a>
                         </li>
+                        @auth('admin')
+                        <li>
+                            <a href="{{ route('admin.show',[auth()->guard('admin')->user()->id]) }}"><i class="fas fa-id-badge"></i>  My Account</a>
+                        </li>
+                        @endauth
                         <li>
                             <a href="{{ route('user.index') }}"><i class="fas fa-users"></i> List User</a>
                         </li>
                         <li>
                             <a href="{{ route('my_news.index') }}"><i class="fas fa-newspaper"></i> My News</a>
-                        </li>
+                        </li>   
                     </ul>
                 </li>
                 <li>

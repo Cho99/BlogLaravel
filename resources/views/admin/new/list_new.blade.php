@@ -29,6 +29,7 @@
         <div>
              <tbody>
             @foreach ($news as $new)
+              
                 <tr>
                     <th scope="row">{{ $new['id'] }}</th>
                     <td>
@@ -75,6 +76,7 @@
                         </div>
                     </td>
                 </tr>
+     
             @endforeach
         </tbody>
         </div>

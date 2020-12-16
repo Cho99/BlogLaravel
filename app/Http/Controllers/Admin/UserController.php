@@ -21,7 +21,6 @@ class UserController extends Controller
     {
         //
         $users = User::all();
-        $user = User::all();
         $news = News::all();
         $extractData = [];
         foreach($users as $valUser){

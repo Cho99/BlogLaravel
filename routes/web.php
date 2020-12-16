@@ -12,24 +12,29 @@
 */
 
 Route::get('/', function () {
-    return redirect()->route('news.index');
+    return view('welcome');
 });
 
 
 // Admin Group
-Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function() {
-    Route::resource('/', 'MyAdminController');
-    Route::get('login', 'MyAdminController@login')->name('admin.index');
-    Route::post('login', 'MyAdminController@postLogin')->name('admin.login');
-    Route::post('logout', 'MyAdminController@logout')->name('admin.logout');
-    Route::resource('user','UserController');
-    Route::resource('my_news', 'MyNewController');
-    Route::resource('tags', 'MyTagController');
-    Route::resource('news', 'NewController');
-    Route::get('/search', 'NewController@search');
+Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'localization'], function() {
+    Route::resources([
+        '/' => 'AdminController',
+        'user' => 'UserController',
+        'my_news' => 'MyNewController',
+        'tags' => 'MyTagController',
+        'news' => 'NewController'
+    ]);
+
+    Route::get('profile/{admin}','AdminController@show')->name('admin.show');
+    Route::get('change-language/{language}', 'AdminController@changeLanguage')->name('change-language');
+    Route::get('register', 'AdminController@create')->name('register');
+    Route::get('download/{picture}','AdminController@download')->name('admin.download');
+    Route::get('login', 'AdminController@login')->name('admin.index');
+    Route::post('login', 'AdminController@postLogin')->name('admin.login');
+    Route::post('logout', 'AdminController@logout')->name('admin.logout');
+    Route::get('search', 'NewController@search');
 });
-
-
 
 // Route::get('/news/delete/{news}', 'NewController@delete');
 

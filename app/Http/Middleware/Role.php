@@ -29,6 +29,12 @@ class Role
             abort(404);
         }
         $user_id = $new->user_id;
+        $admin = auth()->guard('admin')->user();
+        
+        if($admin->level === 0) {
+            return $next($request);
+        }
+        
         if($user_id == auth()->guard('admin')->user()->id) {
             return $next($request);
         } else {

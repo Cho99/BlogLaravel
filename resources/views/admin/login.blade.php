@@ -30,6 +30,17 @@
 </head>
 
 <body>
+    <ul class="nav justify-content-end mr-5">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Language
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{{ route('change-language', ['en']) }}">English</a>
+              <a class="dropdown-item" href="{{ route('change-language', ['vi']) }}">VietNamese</a>
+            </div>
+          </li>
+    </ul>
     <div class="d-flex justify-content-center align-content-center" style="height: 100vh; align-items: center;">
         <div class="card" style="width: 350px;">
             <article class="card-body">
@@ -37,20 +48,20 @@
                 <hr>
                 @if (Session::has('mess'))
                     <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Thông báo: </strong> {!! Session::get('mess') !!}
+                        <strong>{{ trans('labels.warning') }}: </strong> {!! Session::get('mess') !!}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                 @endif
                 @if (Session::has('mess_success'))
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>Thông báo: </strong> {!! Session::get('mess_success') !!}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            @endif
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>{{ trans('labels.warning') }}: </strong> {!! Session::get('mess_success') !!}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
                 <form action="{{ route('admin.login') }}" method="POST">
                     @csrf
                     <div class="form-group">
@@ -58,7 +69,8 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
-                            <input name="email" class="form-control" placeholder="Email or login" type="email">
+                            <input name="email" class="form-control" placeholder="Email or login" type="email"
+                                value="{{ old('email') }}">
                         </div>
                         @error('email')
                             <span class="text-danger font-weight-bold mt-2">{{ $message }}</span>
@@ -76,9 +88,13 @@
                         @enderror
                     </div>
                     <div class="form-group">
-                        <button type="submit" class="btn btn-primary btn-block"> Login </button>
+                        <button type="submit" class="btn btn-primary btn-block"> {{ trans('labels.login') }} </button>
                     </div>
-                    <p class="text-center"><a href="#" class="btn">Forgot password?</a> OR <a href="{{ route('create') }}" class="btn">Sign up</a> </p>
+                    <div class="form-group">
+                        <input type="checkbox" name="remember">{{ trans('labels.remember_me') }}
+                    </div>
+                    <p class="text-center"><a href="#" class="btn">{{ trans('labels.forgot_password') }} ?</a> OR <a
+                            href="{{ route('create') }}" class="btn">{{ trans('labels.register') }}</a> </p>
                 </form>
             </article>
         </div> <!-- card.// -->

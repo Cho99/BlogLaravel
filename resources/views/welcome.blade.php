@@ -81,7 +81,8 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    {{-- {{ Lang::get('messages.welcome') }} --}}
+                    {{ trans('messages.welcome')}}
                 </div>
 
                 <div class="links">
