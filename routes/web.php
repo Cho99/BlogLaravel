@@ -22,8 +22,10 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'loca
         '/' => 'AdminController',
         'user' => 'UserController',
         'my_news' => 'MyNewController',
-        'tags' => 'MyTagController',
-        'news' => 'NewController'
+       
+        'news' => 'NewController',
+        'posts' => 'PostController',
+        'videos' => 'VideoController'
     ]);
 
     Route::get('profile/{admin}','AdminController@show')->name('admin.show');
@@ -34,7 +36,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin', 'middleware' => 'loca
     Route::post('login', 'AdminController@postLogin')->name('admin.login');
     Route::post('logout', 'AdminController@logout')->name('admin.logout');
     Route::get('search', 'NewController@search');
+    Route::resource('tags', 'MyTagController');
 });
+
 
 // Route::get('/news/delete/{news}', 'NewController@delete');
 

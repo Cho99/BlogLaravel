@@ -6,7 +6,9 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 use App\Models\News;
 use App\Models\Admin;
-use App\Policies\RolePolicy;
+use App\Models\Tag;
+use App\Image;
+use App\Policies\TagPolicy;
 use Auth;
 
 class AuthServiceProvider extends ServiceProvider
@@ -18,7 +20,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         // 'App\Model' => 'App\Policies\ModelPolicy',
-        //App\Models\News::class => App\Policies\NewsPolicy
+        Tag::class => TagPolicy::class,
     ];
 
     /**
@@ -29,13 +31,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {   
         $this->registerPolicies();
-        // Gate::before(function($user) {
-        //     //dd($user);
-        //     return true;
-        // });
-        // Gate::define('view-news', function($user, $new) {
-        //     return $user->id === $new;
-        //     //return true;
-        // });
     }
 }

@@ -68,7 +68,7 @@
                       
                     </ul>
                 </li>
-
+                @can('view-news')
                 <li>
                     <a href="#pageSubmenuTag" data-toggle="collapse" aria-expanded="false"
                         class="dropdown-toggle"><i class="fas fa-user-tag"></i> Tags</a>
@@ -79,6 +79,7 @@
                         
                     </ul>
                 </li>
+                @endcan
             </ul>
         </nav>
         <div id="content">

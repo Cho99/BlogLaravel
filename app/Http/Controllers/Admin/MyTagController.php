@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class MyTagController extends Controller
 {
     public function __construct() {
+        $this->middleware('auth');
         $this->middleware('admin', ['except' => 'login']);
     }
     /**
