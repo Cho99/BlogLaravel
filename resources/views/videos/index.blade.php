@@ -27,7 +27,17 @@
                         @endforeach
                     </td>
                     <td>
-                        <div><a href="{{ route('posts.edit', [$video->id]) }}">Edit</a></div>
+                        <div class="d-flex">
+                            <div><a href="{{ route('videos.edit', [$video->id]) }}" class="btn btn-success mr-2">Edit</a>
+                            </div>
+                            <div>
+                                <form action="{{ route('videos.destroy', [$video->id]) }}" method="POST">
+                                    @csrf
+                                    @method('Delete')
+                                    <button class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             @endforeach

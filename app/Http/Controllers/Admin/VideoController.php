@@ -77,6 +77,9 @@ class VideoController extends Controller
     public function edit($id)
     {
         //
+        $video = Video::find($id)->load('tags');
+        $tags = Tag::all();
+        return view('videos.edit', compact('video', 'tags'));
     }
 
     /**
@@ -89,6 +92,13 @@ class VideoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        //dd($id, $request->all());
+        $video =  Video::find($id);
+        $video->name = $request->name;
+        $tag = $request->tag; 
+        $video->tags()->sync($tag);
+        $video->save();
+        return redirect()->route('videos.index');
     }
 
     /**
@@ -100,5 +110,14 @@ class VideoController extends Controller
     public function destroy($id)
     {
         //
+        $video = Video::find($id);
+        $tags = $video->load('tags');
+        foreach($tags['tags'] as $tag) {
+            $video->tags()->detach($tag);
+        }
+        $result = $video->delete();
+        if ($result) {
+            return redirect()->route('videos.index');
+        }
     }
 }

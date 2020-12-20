@@ -95,15 +95,11 @@ class PostController extends Controller
         //
         $post = Post::find($id);
         //dd($request->all());
-        $tag = array_keys($request->tag);
-        //dd($tag);
-        // $tag = [];
-        // foreach($request->tag as $item) {
-        //     array_push($tag, $item);
-        // }
-        //dd($tag);
+        $tag = $request->tag;
+        $post->name = $request->name;
         $post->tags()->sync($tag);
-       return redirect()->route('posts.index'); 
+        $post->save();
+        return redirect()->route('posts.index'); 
     }
 
     /**
